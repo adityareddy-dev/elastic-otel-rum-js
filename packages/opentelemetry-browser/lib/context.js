@@ -47,10 +47,11 @@ export const AsyncApisContextManager = {
         const manager = this;
 
         // NOTE: this project has `@types/node` installed at the root as a devDependency
-        // as is needed fro scripts and the node utils for testing. The types leak into
-        // here and we get an error siche the typeof globalThis merges with the nodejs types.
-        // There is no plan on using other window's APIs so a couple of ts-expect-error is enough instead
-        // of having to split TS configurations between lib and tests folders
+        // as is needed for scripts and the nodejs utils for testing. The types leak into
+        // here and we get an error since the `globalThis`type merges with the nodejs types.
+        // There is no plan on using other window's APIs so a couple of `ts-expect-error` is enough instead
+        // of having to split TS configurations between lib and tests folders.
+
         // @ts-expect-error -- @types/node merge with globalThis
         wrap(window, 'setTimeout', (origSetTimeout) => {
             /**
