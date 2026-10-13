@@ -45,7 +45,13 @@ export const AsyncApisContextManager = {
             return this;
         }
         const manager = this;
-        // @ts-expect-error -- TODO: explain node types leak
+
+        // NOTE: this project has `@types/node` installed at the root as a devDependency
+        // as is needed fro scripts and the node utils for testing. The types leak into
+        // here and we get an error siche the typeof globalThis merges with the nodejs types.
+        // There is no plan on using other window's APIs so a couple of ts-expect-error is enough instead
+        // of having to split TS configurations between lib and tests folders
+        // @ts-expect-error -- @types/node merge with globalThis
         wrap(window, 'setTimeout', (origSetTimeout) => {
             /**
              * @this {any}
@@ -61,7 +67,7 @@ export const AsyncApisContextManager = {
                 if (isNaN(delay) || delay <= 50) {
                     args[0] = bindFn(args[0], manager, manager.active());
                 }
-                // @ts-expect-error -- the retrn type does not match with the leaked types
+                // @ts-expect-error -- @types/node merge with globalThis
                 return origSetTimeout.apply(this, args);
             };
         });
