@@ -45,6 +45,7 @@ export const AsyncApisContextManager = {
             return this;
         }
         const manager = this;
+        // @ts-expect-error -- TODO: explain node types leak
         wrap(window, 'setTimeout', (origSetTimeout) => {
             /**
              * @this {any}
@@ -60,6 +61,7 @@ export const AsyncApisContextManager = {
                 if (isNaN(delay) || delay <= 50) {
                     args[0] = bindFn(args[0], manager, manager.active());
                 }
+                // @ts-expect-error -- the retrn type does not match with the leaked types
                 return origSetTimeout.apply(this, args);
             };
         });
