@@ -19,7 +19,7 @@ env:
 on:
   issues:
     types: [opened, reopened, closed]
-  pull_request:
+  pull_request_target:
     types: [opened, ready_for_review, reopened, closed]
 
 permissions:
