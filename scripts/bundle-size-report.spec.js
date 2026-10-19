@@ -12,7 +12,7 @@ import {test} from 'node:test';
 import {fileURLToPath} from 'node:url';
 
 const script = fileURLToPath(
-    new URL('../../../../scripts/report-bundle-size.js', import.meta.url)
+    new URL('./report-bundle-size.js', import.meta.url)
 );
 
 function runReport(files, summary) {
